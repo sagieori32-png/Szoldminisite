@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בי"ס הנרייטה סאלד – התשפ"ז</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#0f9077;
+  --green-dark:#0b6e5b;
+  --mint:#9fd9c9;
+  --magenta:#a444ad;
+  --magenta-light:#c77fd0;
+  --orange:#f2a93b;
+  --purple-soft:#cfa8e6;
+  --paper:#ececec;
+  --paper-dark:#e2e2e2;
+  --ink:#1c1c1c;
+  --white:#ffffff;
+  --radius:18px;
+  --shadow:0 6px 24px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Heebo',sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:radial-gradient(circle at 20% 15%, #f5f5f5 0, transparent 40%),radial-gradient(circle at 85% 80%, #f2f2f2 0, transparent 45%);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Rubik',sans-serif}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
+}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1.2rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:'Rubik';font-weight:900;color:var(--green);font-size:1.05rem;cursor:pointer}
+.brand .leaf{width:34px;height:34px;background:var(--green);border-radius:50% 50% 50% 4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;transform:rotate(-10deg)}
+.nav-links{display:flex;gap:.2rem;align-items:center;flex-wrap:wrap}
+.nav-links a{
+  text-decoration:none;color:var(--ink);font-weight:500;font-size:.92rem;
+  padding:.45rem .8rem;border-radius:999px;transition:background .2s,color .2s;
+}
+.nav-links a:hover{background:var(--mint);color:var(--green-dark)}
+.nav-links a.admin-link{background:var(--magenta);color:#fff;font-weight:700}
+.nav-links a.admin-link:hover{background:var(--green)}
+.hamburger{display:none;background:none;border:none;font-size:1.7rem;color:var(--green);cursor:pointer}
+@media(max-width:880px){
+  .hamburger{display:block}
+  .nav-links{
+    display:none;position:absolute;top:100%;right:0;left:0;
+    background:#fff;flex-direction:column;align-items:stretch;padding:1rem;box-shadow:0 12px 24px rgba(0,0,0,.12);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.8rem 1rem;border-radius:12px}
+}
+
+/* ---------- HERO ---------- */
+header.hero{
+  position:relative;text-align:center;padding:4.5rem 1.2rem 5rem;overflow:hidden;
+}
+.hero .doodle{position:absolute;font-family:'Rubik';font-weight:900;user-select:none;pointer-events:none}
+.d-quote1{top:2rem;right:6%;font-size:5rem;color:var(--mint);transform:rotate(-8deg)}
+.d-quote2{bottom:7rem;left:5%;font-size:5rem;color:var(--green);transform:rotate(6deg)}
+.d-star1{top:9rem;left:10%;font-size:3.4rem;color:var(--orange);transform:rotate(15deg)}
+.d-star2{bottom:2.5rem;right:9%;font-size:3.4rem;color:var(--purple-soft);transform:rotate(-20deg)}
+.d-bubble{top:3.5rem;left:22%;font-size:2.6rem;color:var(--orange);transform:rotate(-6deg)}
+.hero-logos{display:flex;justify-content:space-between;align-items:flex-start;max-width:900px;margin:0 auto 1.5rem;gap:1rem}
+.school-emblem{text-align:center;flex:1}
+.school-emblem svg{width:52px;height:64px;display:block;margin:0 auto .3rem}
+.school-emblem .emblem-text{font-size:.82rem;font-weight:700;color:#3a3a3a;line-height:1.35}
+.mishpahti-logo{display:inline-grid;grid-template-columns:repeat(6,auto);gap:3px;direction:rtl;transform:rotate(2deg)}
+.mishpahti-logo .tile{
+  width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Rubik';font-weight:900;font-size:.85rem;border-radius:4px;
+}
+.mishpahti-logo .fig{
+  grid-column:1/-1;justify-self:center;font-size:1.3rem;line-height:1;margin-bottom:2px;
+  background:linear-gradient(90deg,var(--magenta),var(--orange),var(--green));
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;
+}
+.mishpahti-logo .spacer{background:none}
+@media(max-width:640px){
+  .hero-logos{flex-direction:column;align-items:center;gap:1.2rem}
+  .mishpahti-logo,.hero-logos>div:last-child{order:-1}
+}
+.footer-logos{display:flex;justify-content:center;align-items:center;gap:2rem;margin-bottom:1rem;flex-wrap:wrap}
+.footer-logos .school-emblem svg path{fill:var(--mint)!important}
+.footer-logos .emblem-text{color:#bbb}
+.hero .welcome{font-family:'Rubik';font-weight:700;font-size:1.5rem;transform:rotate(-4deg);display:inline-block;margin-bottom:1.2rem;color:var(--ink)}
+.hero h1{display:block;max-width:640px;margin:0 auto}
+.hero .band{
+  display:inline-block;background:var(--green);color:#fff;
+  font-size:clamp(2rem,6vw,3.4rem);font-weight:900;padding:.35rem 1.4rem;border-radius:10px;
+  margin:.35rem 0;transform:rotate(-1.5deg);box-shadow:var(--shadow);
+}
+.hero .band.magenta{background:var(--magenta);transform:rotate(1.5deg)}
+.hero p.sub{max-width:560px;margin:1.6rem auto 0;font-size:1.1rem;color:#444}
+.hero .school-tag{margin-top:.6rem;font-size:.9rem;color:#666}
+
+/* ---------- SECTIONS ---------- */
+main{max-width:980px;margin:0 auto;padding:0 1.2rem 5rem}
+section.part{
+  background:#f7f7f7;border-radius:26px;box-shadow:var(--shadow);
+  padding:2.6rem clamp(1.2rem,4vw,3rem);margin-bottom:2.6rem;position:relative;
+}
+section.part::before{
+  content:"”";font-family:'Rubik';font-weight:900;font-size:4rem;line-height:1;
+  color:var(--mint);position:absolute;top:1rem;left:1.4rem;
+}
+.part-tag{
+  display:inline-block;background:var(--magenta);color:#fff;font-family:'Rubik';font-weight:700;
+  font-size:.85rem;padding:.25rem .9rem;border-radius:999px;margin-bottom:.8rem;
+}
+section.part h2{color:var(--green);font-size:clamp(1.5rem,4vw,2.1rem);margin-bottom:1.2rem}
+section.part h3{color:var(--magenta);font-size:1.15rem;margin:1.6rem 0 .4rem}
+section.part p{margin-bottom:.8rem;max-width:70ch}
+.lead{font-weight:700;font-size:1.1rem;color:var(--green-dark)}
+
+.chip-grid{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.chip{
+  background:#fff;border:2px solid var(--mint);border-radius:999px;
+  padding:.4rem 1rem;font-weight:500;font-size:.95rem;
+}
+.chip.orange{border-color:var(--orange)}
+.chip.magenta{border-color:var(--magenta-light)}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.2rem}
+.mini-card{
+  background:#fff;border-radius:var(--radius);padding:1.1rem 1.2rem;box-shadow:0 3px 12px rgba(0,0,0,.06);
+  border-top:5px solid var(--green);
+}
+.mini-card:nth-child(3n+2){border-top-color:var(--magenta)}
+.mini-card:nth-child(3n){border-top-color:var(--orange)}
+.mini-card h4{font-family:'Rubik';font-size:1rem;margin-bottom:.3rem}
+.mini-card p{font-size:.88rem;color:#555;margin:0}
+
+.committees{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.8rem;margin-top:1.2rem}
+.committee{
+  background:#fff;border-radius:16px;padding:1rem .6rem;text-align:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);font-weight:700;font-size:.92rem;
+}
+.committee span.ic{display:block;font-size:1.8rem;margin-bottom:.3rem}
+
+.staff-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-top:1rem}
+@media(max-width:700px){.staff-cols{grid-template-columns:1fr}}
+.staff-box{background:#fff;border-radius:var(--radius);padding:1.2rem 1.4rem;box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.staff-box h4{font-family:'Rubik';color:var(--green);margin-bottom:.6rem}
+.staff-box ul{list-style:none}
+.staff-box li{padding:.28rem 0;border-bottom:1px dashed #e4e4e4;font-size:.93rem}
+.staff-box li b{color:var(--magenta)}
+
+.rules-list{list-style:none;margin:1rem 0}
+.rules-list li{
+  background:#fff;border-radius:14px;padding:.7rem 1rem;margin-bottom:.5rem;
+  border-right:6px solid var(--orange);font-size:.97rem;
+}
+.rules-list li:nth-child(2n){border-right-color:var(--green)}
+.rules-list li:nth-child(3n){border-right-color:var(--magenta)}
+.rules-list b{font-family:'Rubik'}
+
+.quote-banner{
+  background:var(--green);color:#fff;border-radius:20px;text-align:center;
+  padding:2rem 1.4rem;margin:2.6rem 0;font-family:'Rubik';box-shadow:var(--shadow);
+}
+.quote-banner h2{font-size:clamp(1.4rem,4vw,2rem);margin-bottom:.6rem;color:#fff}
+.quote-banner p{font-size:1.05rem;opacity:.95}
+.quote-banner .hl{color:var(--orange);font-weight:900}
+
+/* ---------- CALENDAR ---------- */
+.cal-wrap{background:#fff;border-radius:var(--radius);padding:1.2rem;box-shadow:0 3px 14px rgba(0,0,0,.07);margin-top:1.2rem}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.cal-head h3{margin:0;color:var(--green);font-size:1.2rem}
+.cal-nav{display:flex;gap:.4rem}
+.cal-nav button{
+  background:var(--mint);border:none;border-radius:10px;width:38px;height:38px;
+  font-size:1.1rem;cursor:pointer;font-weight:700;color:var(--green-dark);
+}
+.cal-nav button:hover{background:var(--green);color:#fff}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{text-align:center;font-weight:700;font-size:.8rem;color:#888;padding:.3rem 0}
+.cal-cell{
+  min-height:72px;background:#f6f6f6;border-radius:10px;padding:.3rem .35rem;
+  font-size:.8rem;position:relative;cursor:pointer;transition:background .15s;
+}
+.cal-cell:hover{background:var(--mint)}
+.cal-cell.other{opacity:.35}
+.cal-cell.today{outline:3px solid var(--orange)}
+.cal-cell .dnum{font-weight:700;font-size:.82rem}
+.cal-event{
+  background:var(--magenta);color:#fff;border-radius:6px;padding:1px 5px;
+  font-size:.68rem;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.cal-event.g{background:var(--green)}
+.cal-legend{font-size:.82rem;color:#777;margin-top:.7rem}
+@media(max-width:640px){.cal-cell{min-height:58px}.cal-event{font-size:.6rem}}
+
+/* ---------- MODALS ---------- */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;
+  align-items:center;justify-content:center;z-index:500;padding:1rem;
+}
+.modal-bg.show{display:flex}
+.modal{
+  background:#fff;border-radius:22px;padding:1.8rem;width:100%;max-width:430px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:88vh;overflow-y:auto;
+}
+.modal h3{color:var(--green);margin-bottom:1rem;font-size:1.3rem}
+.modal label{display:block;font-weight:700;font-size:.88rem;margin:.7rem 0 .25rem}
+.modal input,.modal textarea,.modal select{
+  width:100%;padding:.6rem .8rem;border:2px solid #e2e2e2;border-radius:12px;
+  font-family:'Heebo';font-size:.95rem;
+}
+.modal input:focus,.modal textarea:focus{outline:none;border-color:var(--green)}
+.btn{
+  background:var(--green);color:#fff;border:none;border-radius:999px;
+  padding:.65rem 1.5rem;font-family:'Heebo';font-weight:700;font-size:.95rem;cursor:pointer;
+}
+.btn:hover{background:var(--green-dark)}
+.btn.magenta{background:var(--magenta)}
+.btn.ghost{background:#eee;color:#444}
+.btn.danger{background:#d3495a}
+.modal .btn-row{display:flex;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+.err-msg{color:#c22;font-size:.85rem;margin-top:.5rem;min-height:1.2em}
+
+/* ---------- ADMIN ---------- */
+#adminPanel{display:none}
+#adminPanel.show{display:block}
+.admin-bar{
+  background:var(--magenta);color:#fff;border-radius:16px;padding:.8rem 1.2rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem;
+}
+.event-row{
+  background:#fff;border-radius:12px;padding:.6rem 1rem;display:flex;
+  justify-content:space-between;align-items:center;margin-bottom:.5rem;gap:.6rem;flex-wrap:wrap;
+}
+.event-row .meta{font-size:.9rem}
+.event-row .meta b{color:var(--green)}
+.event-row button{font-size:.8rem;padding:.35rem .9rem}
+
+/* ---------- CHATBOT ---------- */
+#chatFab{
+  position:fixed;bottom:1.4rem;left:1.4rem;z-index:400;
+  width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--green);color:#fff;font-size:1.7rem;box-shadow:0 8px 24px rgba(15,144,119,.45);
+  transition:transform .2s;
+}
+#chatFab:hover{transform:scale(1.08)}
+#chatBox{
+  position:fixed;bottom:1.4rem;left:1.4rem;z-index:450;width:min(370px,92vw);
+  height:min(540px,80vh);background:#fff;border-radius:22px;box-shadow:0 18px 60px rgba(0,0,0,.28);
+  display:none;flex-direction:column;overflow:hidden;
+}
+#chatBox.open{display:flex}
+.chat-head{background:var(--green);color:#fff;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center}
+.chat-head b{font-family:'Rubik'}
+.chat-head button{background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem;background:#f6f6f6}
+.msg{max-width:85%;padding:.55rem .9rem;border-radius:16px;font-size:.9rem;line-height:1.55;white-space:pre-wrap}
+.msg.bot{background:#fff;border:1.5px solid var(--mint);align-self:flex-start;border-bottom-right-radius:4px}
+.msg.user{background:var(--magenta);color:#fff;align-self:flex-end;border-bottom-left-radius:4px}
+.msg.typing{color:#888;font-style:italic}
+.chat-input{display:flex;gap:.5rem;padding:.7rem;border-top:1px solid #eee;background:#fff}
+.chat-input input{flex:1;border:2px solid #e4e4e4;border-radius:999px;padding:.55rem 1rem;font-family:'Heebo';font-size:.9rem}
+.chat-input input:focus{outline:none;border-color:var(--green)}
+.chat-input button{background:var(--orange);border:none;border-radius:50%;width:42px;height:42px;font-size:1.1rem;cursor:pointer;color:#fff}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--ink);color:#ddd;text-align:center;padding:2.4rem 1.2rem;
+}
+footer .foot-title{font-family:'Rubik';font-weight:900;color:var(--mint);font-size:1.2rem;margin-bottom:.4rem}
+footer p{font-size:.9rem}
+footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
+.toast{
+  position:fixed;bottom:6rem;right:50%;transform:translateX(50%);
+  background:var(--green);color:#fff;padding:.7rem 1.4rem;border-radius:999px;
+  box-shadow:var(--shadow);z-index:600;display:none;font-weight:700;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand" onclick="scrollTo({top:0,behavior:'smooth'})">
+      <img src="data:image/png;base64,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" width="26" height="37" alt="" style="display:block">
+      <span>הנרייטה סאלד</span>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#part-a" onclick="closeNav()">המקום שלנו</a>
+      <a href="#principal" onclick="closeNav()">דבר המנהל</a>
+      <a href="#part-b" onclick="closeNav()">סאלד בפעולה</a>
+      <a href="#staff" onclick="closeNav()">הצוות שלנו</a>
+      <a href="#part-c" onclick="closeNav()">עושים סדר</a>
+      <a href="#calendar" onclick="closeNav()">לוח שנה</a>
+      <a href="#parents" onclick="closeNav()">הורים</a>
+      <a href="#" class="admin-link" onclick="openAdmin(event)">מערכת ניהול</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="doodle d-quote1">”</span>
+  <span class="doodle d-quote2">„</span>
+  <span class="doodle d-star1">✳</span>
+  <span class="doodle d-star2">✳</span>
+  <span class="doodle d-bubble">💬</span>
+
+  <div class="hero-logos">
+    <div class="school-emblem">
+      <img src="data:image/png;base64,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" width="52" height="74" alt="סמל בית הספר" style="display:block;margin:0 auto;">
+      <div class="emblem-text">בית הספר הממלכתי<br>ע״ש הנרייטה סאלד ירושלים</div>
+    </div>
+    <div>
+      <div class="mishpahti-logo" aria-label="משפחתי בסאלד">
+        <div class="fig">🚴‍♀️🧍‍♂️🧍‍♀️</div>
+        <span class="tile" style="background:#e94f9b">מ</span>
+        <span class="tile" style="background:#f2a93b">ש</span>
+        <span class="tile" style="background:#0f9077">פ</span>
+        <span class="tile" style="background:#7b4fc9">ח</span>
+        <span class="tile" style="background:#e2554f">ת</span>
+        <span class="tile" style="background:#3aa0d8">י</span>
+        <span class="tile spacer"></span>
+        <span class="tile" style="background:#43b649">ב</span>
+        <span class="tile" style="background:#f2c53b">ס</span>
+        <span class="tile" style="background:#e94f9b">א</span>
+        <span class="tile" style="background:#3aa0d8">ל</span>
+        <span class="tile" style="background:#7b4fc9">ד</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="welcome">ברוכים הבאים</div>
+  <h1>
+    <span class="band">בי״ס ע״ש הנרייטה סאלד</span><br>
+    <span class="band magenta">התשפ״ז</span>
+  </h1>
+  <p class="sub">בית הספר הוא מקום שחיים בו, לא רק מקום שלומדים בו. השנה נחזק את תחושת השייכות – מקום שבו ילדים, צוות ומשפחות מרגישים בבית, בוחרים, משפיעים וצומחים.</p>
+  <p class="school-tag">בית הספר הממלכתי ע״ש הנרייטה סאלד, ירושלים · משפחתי בסאלד</p>
+</header>
+
+<main>
+
+<!-- ============ PART A ============ -->
+<section class="part" id="part-a">
+  <span class="part-tag">חלק א׳</span>
+  <h2>המקום שלנו</h2>
+  <p class="lead">בית הספר הוא מקום שחיים בו, לא רק מקום שלומדים בו.</p>
+  <p>בשנת תשפ״ז אנחנו רוצים לחזק את תחושת השייכות לבית הספר: מקום שבו ילדים, אנשי צוות ומשפחות מרגישים בבית, בוחרים, משפיעים וצומחים. אנחנו רוצים לעבור ממקום שבו אנחנו רק נמצאים – למקום שאליו אנחנו שייכים. מקום שבו חלומות של תלמידים, מורים והורים מקבלים מקום, זמן והזדמנות להפוך למעשה חינוכי.</p>
+
+  <h3>החזון שלנו והמטרות לתשפ״ז</h3>
+  <div class="card-grid">
+    <div class="mini-card"><h4>הילד במרכז</h4><p>לראות כל ילד, לזהות את החוזקות שלו, לאפשר בחירה, לפתח אחריות וסקרנות, לחזק ביטחון עצמי ולתת מקום לקול האישי.</p></div>
+    <div class="mini-card"><h4>שייכות, בחירה ואחריות</h4><p>אפשרות לבחור את דרכי הלמידה ולתת לכל חבר קהילה הזדמנות להביא חלומות ורעיונות לידי מימוש – לפיתוח אחריות ומסוגלות עצמית.</p></div>
+    <div class="mini-card"><h4>למידה משמעותית</h4><p>למידה המשלבת ידע, מיומנויות ומשמעות; מחברת בין הכיתה לעולם האמיתי ומאפשרת חקר, יצירה, התנסות ותוצר משמעותי.</p></div>
+    <div class="mini-card"><h4>קהילה ואמון</h4><p>חיזוק האמון בין ילדים, צוות ומשפחות ויצירת שותפות ברורה, מכבדת ומקדמת.</p></div>
+  </div>
+</section>
+
+<!-- ============ PRINCIPAL ============ -->
+<section class="part" id="principal">
+  <span class="part-tag">דבר המנהל</span>
+  <h2>קהילת סאלד יקרה,</h2>
+  <p>שנת תשפ״ז נפתחת בשמחה לאחר שיפוצי קיץ ארוכים: שיפצנו את מגרש הספורט העליון, הנגשנו את החצר העליונה לתחתונה והוספנו משחק חוץ־כיתתי אלקטרוני – המשך ללמידת החוץ ולפדגוגיה מבוססת המקום שאנו מקדמים. גולת הכותרת: שיפוץ מרחב כיתות שכבת א׳ ברוח הפדגוגיה הייחודית שלנו. בנוסף, אנו מתכננים לבנות השנה חממה ללימוד מדעים ובוטניקה ומטבח ללמידה המשלבת בישול ואפייה.</p>
+  <p>כל אלו הם תוצרים של עבודה מאומצת בסוף השנה שעברה לדיוק הייחודיות של בית הספר, בשיתוף הורים ומורים. חוברת זו – ואתר זה – הם המשך לתהליך, ומטרתם להמשיך להפוך את בית הספר למקום של כולנו: לפתח תחושת שייכות ומסוגלות עצמית על ידי הזמנת כל חברי הקהילה להיות פעילים ולהוביל תהליכים משמעותיים.</p>
+  <p>אנו רוצים לפעול בבית ספר שנותן בסיס להגשמת חלומות של תלמידים, מורים והורים – בית ספר שבו הילדים מתנסים, בוחרים, מובילים, טועים, מתקנים, יוצרים ומגלים את עצמם ואת העולם.</p>
+  <p>תודה לכל אנשי הצוות ולהורים שלקחו חלק בתהליך הייחודיות, לצוות המנהלה ולמתניה אב הבית, לכל המורים על ההכנות בחופש הגדול, ותודה ענקית לשותפתי לדרך, יפה אמסלם, על ההובלה והיצירה המחודשת.</p>
+  <p class="lead">זה המקום שלנו – נבנה אותו יחד. בברכת שנת לימודים בטוחה ופורייה,</p>
+  <p><b>תומר אושרי</b> · מנהל בית הספר</p>
+  <h3>דבר סגנית המנהל</h3>
+  <p><b>יפה אמסלם</b> · סגנית מנהל בית הספר <span style="color:#888">(הטקסט המלא יעודכן בקרוב)</span></p>
+  <h3>דבר יו״ר הנהגת ההורים</h3>
+  <p><b>בת-חן נבו, יערה נסטר-איל, אורית תור</b> · יו״ר הנהגת ההורים <span style="color:#888">(הטקסט המלא יעודכן בקרוב)</span></p>
+</section>
+
+<!-- ============ PART B ============ -->
+<section class="part" id="part-b">
+  <span class="part-tag">חלק ב׳</span>
+  <h2>סאלד בפעולה</h2>
+
+  <h3>הייחודיות שלנו – בית הספר הוא המקום שלנו</h3>
+  <p>בית הספר הוא מרחב של שייכות, בחירה, אחריות והשפעה. אנחנו רוצים שילדים ומבוגרים ירגישו שיש להם מקום אמיתי בתוך הבית המשותף.</p>
+
+  <h3>לומדים בכל מקום</h3>
+  <p>יש הרבה תנועה בין פנים לחוץ: הלמידה מתרחשת בכיתה, בחצר, בטבע, בסדנאות ובקהילה. מרחבי הלמידה משתנים בהתאם למשימה, ללומדים ולמטרה. למידת החוץ בכל כיתה מאפשרת להכיר מקומות בסביבת בית הספר ולחבר אותנו לקהילה, לירושלים ולמדינה.</p>
+
+  <h3>פדגוגיה – לכל לומד מסע אישי</h3>
+  <div class="chip-grid">
+    <span class="chip">למידה רב־גילאית</span>
+    <span class="chip orange">קבוצות משימה</span>
+    <span class="chip magenta">בחירה אמיתית של תלמידים</span>
+    <span class="chip">פרויקטים אישיים</span>
+    <span class="chip orange">למידה מבוססת מקום</span>
+    <span class="chip magenta">למידה מבוססת קהילה</span>
+    <span class="chip">למידה מתוך החיים</span>
+    <span class="chip orange">תערוכות ותוצרי למידה</span>
+    <span class="chip magenta">אינטליגנציות מגוונות</span>
+    <span class="chip">מיפוי אישי של כל תלמיד</span>
+    <span class="chip orange">ידע, מיומנויות ומשמעות</span>
+  </div>
+
+  <h3>חברת הילדים – ילדים משפיעים</h3>
+  <p>מרחב שבו תלמידים לא רק לומדים על אחריות ומנהיגות אלא מתנסים בהן בפועל. השנה נעבוד בשיטת <b>לת״ת – לכל תלמיד תפקיד</b>: כל תלמידי ג׳–ו׳ פעילים בוועדות בית ספריות עם ליווי וחניכה של מורים בשעות קבועות כל שבוע. תלמידי א׳–ב׳ יקיימו תהליכי הובלה וניהול עצמי במסגרת כיתתית ובחונכויות.</p>
+  <div class="committees">
+    <div class="committee"><span class="ic">📚</span>ספריה</div>
+    <div class="committee"><span class="ic">🤸</span>הפסקה פעילה</div>
+    <div class="committee"><span class="ic">📰</span>עיתון</div>
+    <div class="committee"><span class="ic">🎙️</span>רדיו</div>
+    <div class="committee"><span class="ic">🌱</span>סביבה וקיימות</div>
+    <div class="committee"><span class="ic">🤝</span>גישור</div>
+    <div class="committee"><span class="ic">📣</span>שגריר חוץ</div>
+    <div class="committee"><span class="ic">🌿</span>חממה</div>
+    <div class="committee"><span class="ic">🍳</span>מטבח</div>
+    <div class="committee"><span class="ic">📐</span>עיצוב מרחבים</div>
+    <div class="committee"><span class="ic">🎲</span>חדר משחקים</div>
+    <div class="committee"><span class="ic">💞</span>מעורבות חברתית</div>
+    <div class="committee"><span class="ic">🕎</span>חגים ומועדים</div>
+    <div class="committee"><span class="ic">🌅</span>בוקר טוב</div>
+  </div>
+
+  <h3>חונכות וחברה</h3>
+  <p>קשרים בין ילדים, חונכות, משחק, הפסקות משמעותיות, פעילויות משותפות, מעורבות חברתית, תרומה לקהילה וחיבורים בין־דוריים. השנה יתקיימו חונכויות קבועות: כיתות ו׳ יחנכו את כיתות ד׳, כיתות ה׳ את כיתות ג׳, כיתות ד׳ את ילדי הגנים וכיתות ב׳ את כיתות א׳.</p>
+
+  <h3>גוונים ובחירה</h3>
+  <p>מרחבים שבהם תלמידים מגלים תחומי עניין, מתנסים, בוחרים ומפתחים חוזקות מעבר לשיעור הרגיל. השנה פרויקט גוונים מתרחב גם לכיתות א׳ ולכיתות ו׳: כיתות א׳–ג׳ בימי שני בשעות 6–7, כיתות ד׳–ו׳ בימי שלישי בשעות 6–7.</p>
+  <div class="chip-grid">
+    <span class="chip">🎙️ רדיו</span>
+    <span class="chip orange">🎵 מוזיקה</span>
+    <span class="chip magenta">🤖 רובוטיקה</span>
+    <span class="chip">💃 מחול</span>
+    <span class="chip orange">♟️ שח-מט</span>
+  </div>
+
+  <h3>תוכניות העשרה ומצוינות</h3>
+  <p>לצד הבחירה, חברת הילדים והלמידה המותאמת פועלות בבית הספר תוכניות העשרה ומצוינות: <b>אמירים, כיתת אמן בשיתוף מוזיאון ישראל ומתמטיקו</b> – המפתחות חשיבה יצירתית וביקורתית, כישורים אמנותיים ומצוינות במתמטיקה. פועלת גם <b>ליגת השכונות</b>, המחברת ספורט, מנהיגות, עבודת צוות וחיבור בין קהילות.</p>
+  <p><b>חדר מל״א</b> הוא מרחב למידה אחר המעניק מענה מותאם לתלמידים המתמודדים עם קשיים רגשיים, חברתיים, לימודיים או התנהגותיים – בשיתוף מחנכת הכיתה ורכזת החדר. בנוסף קיימים מענים רגשיים וטיפוליים שונים לפי צורכי התלמידים.</p>
+
+  <h3>חלומות ותשוקה</h3>
+  <p class="lead">מה היית רוצה ללמוד? ליצור? להוביל? לשנות? – אנחנו רוצים לתת מקום לחלומות של תלמידים, מורים והורים.</p>
+</section>
+
+<!-- ============ STAFF ============ -->
+<section class="part" id="staff">
+  <span class="part-tag">הצוות שלנו</span>
+  <h2>צוות לומד, חוקר ומתפתח</h2>
+  <p>רפלקציה, למידה משותפת, שפה משותפת, פיתוח מקצועי, אמון, ליווי, שיתוף בידע ועבודה משותפת. השנה נמשיך במפגשי מליאת צוות להעשרת הכלים הפדגוגיים, ו<b>מאיה הורביץ</b> תתחיל בתפקיד חדש – פיתוח משאבי אנוש (HR) של הצוות החינוכי.</p>
+  <div class="staff-cols">
+    <div class="staff-box">
+      <h4>הנהלה ותפקידים</h4>
+      <ul>
+        <li><b>מנהל:</b> תומר אושרי</li>
+        <li><b>סגנית:</b> יפה אמסלם</li>
+        <li><b>יועץ:</b> יובל צור</li>
+        <li><b>מנהלה ומזכירות:</b> ברכה לניאדו ויערית טל</li>
+        <li><b>אב בית:</b> מתניה אברהם</li>
+        <li><b>רכזת שכבות א׳+ב׳:</b> הדס אליהו</li>
+        <li><b>רכזת תקשוב ואנגלית:</b> צפנת גליס</li>
+        <li><b>רכזת מדעים:</b> עינת פלד</li>
+        <li><b>רכזת משאבי אנוש:</b> מאיה הורוביץ</li>
+        <li><b>רכזת מתמטיקה:</b> ענת צפניה</li>
+        <li><b>רכזת פרט:</b> מירה בן עזרא</li>
+        <li><b>רכז גוונים:</b> בעז פיינגולד</li>
+        <li><b>רכזת טיולים:</b> יעל וינקלר</li>
+        <li><b>רכז חברתי:</b> אסף אגיוף</li>
+      </ul>
+    </div>
+    <div class="staff-box">
+      <h4>מחנכות ומחנכים</h4>
+      <ul>
+        <li><b>א׳1:</b> מאיה הורוביץ · <b>א׳2:</b> עינת אלון וסיוון בן הרוש</li>
+        <li><b>ב׳1:</b> תמר שייביץ בן אבי · <b>ב׳2:</b> הדס אליהו</li>
+        <li><b>ג׳1:</b> אלינור לוי · <b>ג׳2:</b> מירה בן עזרא וקרן שטרית · <b>ג׳3:</b> ענת צפניה</li>
+        <li><b>ד׳1:</b> נס רחילוביץ · <b>ד׳2:</b> עינת פלד</li>
+        <li><b>ה׳1:</b> יואב פז · <b>ה׳2:</b> עדי בן דוד ומירית סיידוף · <b>ה׳3:</b> יפית זאדה</li>
+        <li><b>ו׳1:</b> בעז פיינגולד · <b>ו׳2:</b> אסף אגיוף</li>
+      </ul>
+      <h4 style="margin-top:1rem">מורים מקצועיים</h4>
+      <ul>
+        <li><b>מדעים וזה״ב:</b> לי אוחנה</li>
+        <li><b>מוסיקה:</b> יוחאי ורד גוברמן</li>
+        <li><b>אומנות:</b> סתיו סקמסקי</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART C ============ -->
+<section class="part" id="part-c">
+  <span class="part-tag">חלק ג׳</span>
+  <h2>עושים סדר</h2>
+
+  <h3>עקרונות התנהלות ומשמעת</h3>
+  <ul class="rules-list">
+    <li><b>חופש</b> – החופש לבחור מחייב אותנו באחריות</li>
+    <li><b>כבוד</b> – לעצמי, לאחר ולמרחב המשותף</li>
+    <li><b>אחריות</b> – למילים, למעשים ולבחירות שלי</li>
+    <li><b>מוגנות</b> – בית הספר הוא מרחב בטוח לכולם</li>
+    <li><b>הקשבה</b> – גם כאשר אנחנו לא מסכימים</li>
+    <li><b>תיקון</b> – טעות היא הזדמנות לקחת אחריות ולתקן</li>
+    <li><b>שייכות</b> – כל אחד מאיתנו אחראי לאווירה ולתחושת הבית</li>
+  </ul>
+  <p>מטרת הנהלים היא יצירת שפה משותפת המקדמת את האקלים הבית־ספרי.</p>
+
+  <h3>הגעה בזמן ונוכחות</h3>
+  <p>יום הלימודים נפתח בשעה <b>8:05</b>. אנא הגיעו בזמן, כשהתלמידים מוכנים לפתיחת היום. הגעה בזמן היא חלק מאחריות אישית ומאפשרת לכיתה להתחיל ברוגע וברצף. במקרה של איחור – נכנסים בשקט ומצטרפים ללמידה ללא הפרעה. ריבוי איחורים יוביל לשיחה עם ההורים, ובמקרים חריגים של איחורים והיעדרויות לא מוצדקות – פנייה לקב״ס המחוז.</p>
+
+  <h3>תלבושת והופעה</h3>
+  <p>מגיעים בתלבושת אחידה ובהופעה מכבדת המתאימה לפעילות. בשיעורי חינוך גופני – לבוש ונעליים מתאימים לפעילות ולבטיחות. במקרה של אי־עמידה בתלבושת יתקיים שיח עם התלמיד והוא יתבקש להחליף ממאגר החולצות בבית הספר; במקרים חוזרים – פנייה להורים.</p>
+
+  <h3>אלימות מילולית ופיזית</h3>
+  <p class="lead">אפס סובלנות לפגיעה, אחריות עם מקום לתיקון. לכל תלמיד ותלמידה הזכות להרגיש בטוחים.</p>
+  <p>בסאלד אין מקום לאלימות פיזית או מילולית, להשפלה, לאיומים, לבריונות או לפגיעה מכוונת במרחב הפיזי או המקוון. כאשר מתרחש אירוע פגיעה, הצוות עוצר את האירוע ומבטיח קודם כול את מוגנות המעורבים; לאחר מכן – בירור עם התלמידים והצוות החינוכי, תיעוד ושיתוף ההורים. בהתאם לחומרת האירוע ייקבעו מענה חינוכי ומשמעתי, תהליך תיקון/תיווך/גישור כשהדבר מתאים ובטוח, ליווי היועץ או ההנהלה, ובמקרים חמורים – צעדים נוספים לפי הנחיות משרד החינוך ותקנון בית הספר.</p>
+  <p>אנו מבקשים מתלמידים לדווח למבוגר משמעותי כאשר הם חווים או עדים לפגיעה. דיווח אינו ״הלשנה״ – הוא דרך לשמור על המרחב המשותף.</p>
+
+  <h3>סביבת בית הספר</h3>
+  <p>סביבה מכבדת, נוחה ונקייה היא בסיס לפעילות חינוכית וקהילתית מיטבית. אנו מצפים שכל חברי הקהילה ישמרו על הניקיון, הריהוט ושלמות המתקנים. תלמידים שיפגעו בציוד ובמרחב יידרשו לשלם על הנזק או לתקנו בעצמם. מוזמנים להביא רעיונות ויוזמות לשיפור מראה בית הספר!</p>
+</section>
+
+<!-- ============ CALENDAR ============ -->
+<section class="part" id="calendar">
+  <span class="part-tag">לוח שנה</span>
+  <h2>לוח אירועים של בית הספר</h2>
+  <p>השנה נעדכן את אירועי בית הספר וקהילת סאלד ביומן, לטובת שקיפות והזדמנות להיערך מראש. מוזמנים לעקוב, להתעדכן וכמובן – לקחת חלק. לחצו על יום כדי לראות את האירועים בו; הוספת אירועים מתבצעת דרך מערכת הניהול (או בלחיצה על יום לאחר התחברות).</p>
+  <div class="cal-wrap">
+    <div class="cal-head">
+      <h3 id="calTitle"></h3>
+      <div class="cal-nav">
+        <button onclick="changeMonth(1)" title="חודש הבא">‹</button>
+        <button onclick="goToday()" title="היום" style="width:auto;padding:0 .8rem;font-size:.85rem">היום</button>
+        <button onclick="changeMonth(-1)" title="חודש קודם">›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <p class="cal-legend">💡 האירועים בלוח משותפים לכל קהילת בית הספר.</p>
+  </div>
+</section>
+
+<!-- ============ PARENTS ============ -->
+<section class="part" id="parents">
+  <span class="part-tag">הורים ושותפות</span>
+  <h2>צוותי פעילות הורים</h2>
+  <p>בבית ספר סאלד פועלים מספר צוותי פעילות ומעורבות של הורים, וכל אחד ואחת יכולים לקחת חלק ולהשפיע על המרחב המשותף שלנו ועל המרחב החינוכי והחברתי של ילדינו.</p>
+  <div class="chip-grid">
+    <span class="chip">נעים להכיר</span>
+    <span class="chip orange">שישי משפחתי</span>
+    <span class="chip magenta">קיימות</span>
+    <span class="chip">תקשורת</span>
+    <span class="chip orange">בינוי ופיתוח</span>
+    <span class="chip magenta">מטבח חינוכי</span>
+    <span class="chip">טיולים</span>
+    <span class="chip orange">מהפיכת הקשב</span>
+    <span class="chip magenta">בוקר קהילה</span>
+    <span class="chip">חגים וטקסים</span>
+  </div>
+  <h3>ועד הורים מרכזי</h3>
+  <p>הוועד המרכזי מתכנס מדי חודש ודן בנושאים שעל סדר היום, מתווה מדיניות ופועל בשיתוף פעולה מלא עם הנהלת בית הספר והצוות החינוכי. מוזמנות ומוזמנים להגיע, להציף נושאים ולהיות נציגי הכיתה שלכם בוועד.</p>
+</section>
+
+<div class="quote-banner">
+  <h2>זה המקום שלנו</h2>
+  <p>מקום <span class="hl">להיות</span> בו · מקום <span class="hl">להשפיע</span> בו · מקום <span class="hl">לצמוח</span> בו</p>
+  <p style="margin-top:.5rem">תלמידים, מורים והורים – שייכים, שותפים וצומחים.</p>
+</div>
+
+<!-- ============ ADMIN PANEL ============ -->
+<section class="part" id="adminPanel">
+  <div class="admin-bar">
+    <b>🔧 מערכת ניהול – שלום Szolds</b>
+    <button class="btn ghost" onclick="logoutAdmin()">התנתקות</button>
+  </div>
+  <h2>ניהול לוח האירועים</h2>
+  <p>כאן ניתן להוסיף, לצפות ולמחוק אירועים המופיעים בלוח השנה של האתר.</p>
+  <button class="btn" onclick="openEventModal()">+ הוספת אירוע חדש</button>
+  <div id="eventList" style="margin-top:1.2rem"></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-logos">
+    <div class="school-emblem">
+      <img src="data:image/png;base64,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" width="42" height="60" alt="" style="display:block;filter:brightness(1.6)">
+    </div>
+    <div class="mishpahti-logo" style="transform:none">
+      <span class="tile" style="background:#e94f9b">מ</span>
+      <span class="tile" style="background:#f2a93b">ש</span>
+      <span class="tile" style="background:#0f9077">פ</span>
+      <span class="tile" style="background:#7b4fc9">ח</span>
+      <span class="tile" style="background:#e2554f">ת</span>
+      <span class="tile" style="background:#3aa0d8">י</span>
+      <span class="tile spacer"></span>
+      <span class="tile" style="background:#43b649">ב</span>
+      <span class="tile" style="background:#f2c53b">ס</span>
+      <span class="tile" style="background:#e94f9b">א</span>
+      <span class="tile" style="background:#3aa0d8">ל</span>
+      <span class="tile" style="background:#7b4fc9">ד</span>
+    </div>
+  </div>
+  <div class="stars">✳ ✳ ✳</div>
+  <div class="foot-title">בית הספר הממלכתי ע״ש הנרייטה סאלד · ירושלים</div>
+  <p>משפחתי בסאלד · שנת הלימודים התשפ״ז</p>
+  <p style="margin-top:.4rem;opacity:.7">זה המקום שלנו – נבנה אותו יחד 💚</p>
+</footer>
+
+<!-- ============ LOGIN MODAL ============ -->
+<div class="modal-bg" id="loginModal">
+  <div class="modal">
+    <h3>כניסה למערכת הניהול</h3>
+    <label>שם משתמש</label>
+    <input type="text" id="loginUser" autocomplete="off">
+    <label>סיסמה</label>
+    <input type="password" id="loginPass">
+    <div class="err-msg" id="loginErr"></div>
+    <div class="btn-row">
+      <button class="btn" onclick="tryLogin()">כניסה</button>
+      <button class="btn ghost" onclick="closeModal('loginModal')">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EVENT MODAL ============ -->
+<div class="modal-bg" id="eventModal">
+  <div class="modal">
+    <h3>הוספת אירוע ללוח</h3>
+    <label>שם האירוע</label>
+    <input type="text" id="evTitle" placeholder="למשל: שישי משפחתי">
+    <label>תאריך</label>
+    <input type="date" id="evDate">
+    <label>שעה (לא חובה)</label>
+    <input type="time" id="evTime">
+    <label>פרטים (לא חובה)</label>
+    <textarea id="evDesc" rows="2" placeholder="מיקום, קהל יעד, הערות..."></textarea>
+    <div class="err-msg" id="evErr"></div>
+    <div class="btn-row">
+      <button class="btn magenta" onclick="saveEvent()">שמירת אירוע</button>
+      <button class="btn ghost" onclick="closeModal('eventModal')">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DAY MODAL ============ -->
+<div class="modal-bg" id="dayModal">
+  <div class="modal">
+    <h3 id="dayModalTitle"></h3>
+    <div id="dayModalBody"></div>
+    <div class="btn-row">
+      <button class="btn" id="dayAddBtn" style="display:none" onclick="addFromDay()">+ הוספת אירוע ליום זה</button>
+      <button class="btn ghost" onclick="closeModal('dayModal')">סגירה</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHATBOT ============ -->
+<button id="chatFab" onclick="toggleChat()" title="בוט סאלד">💬</button>
+<div id="chatBox">
+  <div class="chat-head">
+    <b>🌿 בוט סאלד</b>
+    <button onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="msg bot">שלום! 👋 אני הבוט של בית ספר סאלד. אפשר לשאול אותי כל שאלה על החוברת: חזון, ועדות, גוונים, חונכויות, צוות, נהלים ועוד.</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="שאלו אותי משהו..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">⬅</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= NAV ================= */
+function closeNav(){document.getElementById('navLinks').classList.remove('open')}
+
+/* ================= TOAST ================= */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2600);
+}
+
+/* ================= MODALS ================= */
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+
+/* ================= ADMIN ================= */
+let isAdmin=false;
+function openAdmin(e){
+  e.preventDefault();closeNav();
+  if(isAdmin){showAdminPanel();return}
+  document.getElementById('loginErr').textContent='';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  openModal('loginModal');
+}
+function tryLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(u==='Szolds'&&p==='Szold12345'){
+    isAdmin=true;closeModal('loginModal');showAdminPanel();toast('התחברת בהצלחה 🎉');
+  }else{
+    document.getElementById('loginErr').textContent='שם משתמש או סיסמה שגויים. נסו שוב.';
+  }
+}
+function showAdminPanel(){
+  const p=document.getElementById('adminPanel');
+  p.classList.add('show');
+  renderEventList();
+  p.scrollIntoView({behavior:'smooth'});
+}
+function logoutAdmin(){
+  isAdmin=false;
+  document.getElementById('adminPanel').classList.remove('show');
+  toast('התנתקת מהמערכת');
+  renderCalendar();
+}
+
+/* ================= EVENTS STORAGE ================= */
+const STORE_KEY='szold-calendar-events';
+let events=[];
+async function loadEvents(){
+  try{
+    const res=await window.storage.get(STORE_KEY,true);
+    if(res&&res.value)events=JSON.parse(res.value);
+  }catch(e){events=[]}
+  renderCalendar();
+  if(isAdmin)renderEventList();
+}
+async function persistEvents(){
+  try{
+    await window.storage.set(STORE_KEY,JSON.stringify(events),true);
+  }catch(e){toast('שגיאה בשמירה – נסו שוב')}
+}
+
+/* ================= CALENDAR ================= */
+const HEB_MONTHS=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+const HEB_DOW=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+let calY,calM;
+(function(){const n=new Date();calY=n.getFullYear();calM=n.getMonth()})();
+function changeMonth(d){calM+=d;if(calM<0){calM=11;calY--}if(calM>11){calM=0;calY++}renderCalendar()}
+function goToday(){const n=new Date();calY=n.getFullYear();calM=n.getMonth();renderCalendar()}
+function dateKey(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0')}
+function renderCalendar(){
+  document.getElementById('calTitle').textContent=HEB_MONTHS[calM]+' '+calY;
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  HEB_DOW.forEach(d=>{const el=document.createElement('div');el.className='cal-dow';el.textContent=d;grid.appendChild(el)});
+  const first=new Date(calY,calM,1).getDay();
+  const daysIn=new Date(calY,calM+1,0).getDate();
+  const prevDays=new Date(calY,calM,0).getDate();
+  const today=new Date();
+  const cells=[];
+  for(let i=first-1;i>=0;i--)cells.push({d:prevDays-i,other:true});
+  for(let d=1;d<=daysIn;d++)cells.push({d,other:false});
+  while(cells.length%7!==0)cells.push({d:cells.length- (first+daysIn)+1,other:true});
+  cells.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='cal-cell'+(c.other?' other':'');
+    if(!c.other&&today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===c.d)el.classList.add('today');
+    const key=c.other?null:dateKey(calY,calM,c.d);
+    el.innerHTML='<div class="dnum">'+c.d+'</div>';
+    if(key){
+      const dayEvents=events.filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+      dayEvents.slice(0,2).forEach((ev,i)=>{
+        const b=document.createElement('div');
+        b.className='cal-event'+(i%2?' g':'');
+        b.textContent=(ev.time?ev.time+' ':'')+ev.title;
+        el.appendChild(b);
+      });
+      if(dayEvents.length>2){
+        const more=document.createElement('div');
+        more.style.cssText='font-size:.65rem;color:#888';
+        more.textContent='+'+(dayEvents.length-2)+' נוספים';
+        el.appendChild(more);
+      }
+      el.onclick=()=>openDay(key,c.d);
+    }
+    grid.appendChild(el);
+  });
+}
+let dayModalKey=null;
+function openDay(key,d){
+  dayModalKey=key;
+  document.getElementById('dayModalTitle').textContent=d+' ב'+HEB_MONTHS[calM]+' '+calY;
+  const body=document.getElementById('dayModalBody');
+  const dayEvents=events.filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+  if(dayEvents.length===0){
+    body.innerHTML='<p style="color:#888">אין אירועים ביום זה.</p>';
+  }else{
+    body.innerHTML=dayEvents.map(ev=>
+      '<div class="event-row"><div class="meta"><b>'+esc(ev.title)+'</b>'+
+      (ev.time?' · '+ev.time:'')+
+      (ev.desc?'<br><span style="color:#666;font-size:.85rem">'+esc(ev.desc)+'</span>':'')+
+      '</div>'+(isAdmin?'<button class="btn danger" onclick="deleteEvent(\''+ev.id+'\')">מחיקה</button>':'')+'</div>'
+    ).join('');
+  }
+  document.getElementById('dayAddBtn').style.display=isAdmin?'inline-block':'none';
+  openModal('dayModal');
+}
+function addFromDay(){
+  closeModal('dayModal');
+  openEventModal(dayModalKey);
+}
+
+/* ================= EVENT CRUD ================= */
+function openEventModal(dateKey){
+  if(!isAdmin){toast('הוספת אירועים דרך מערכת הניהול בלבד');return}
+  document.getElementById('evTitle').value='';
+  document.getElementById('evDate').value=dateKey||'';
+  document.getElementById('evTime').value='';
+  document.getElementById('evDesc').value='';
+  document.getElementById('evErr').textContent='';
+  openModal('eventModal');
+}
+async function saveEvent(){
+  const title=document.getElementById('evTitle').value.trim();
+  const date=document.getElementById('evDate').value;
+  const time=document.getElementById('evTime').value;
+  const desc=document.getElementById('evDesc').value.trim();
+  if(!title||!date){document.getElementById('evErr').textContent='נא למלא שם אירוע ותאריך';return}
+  events.push({id:'ev_'+Date.now(),title,date,time,desc});
+  await persistEvents();
+  closeModal('eventModal');
+  renderCalendar();renderEventList();
+  toast('האירוע נוסף ללוח ✅');
+}
+async function deleteEvent(id){
+  events=events.filter(e=>e.id!==id);
+  await persistEvents();
+  renderCalendar();renderEventList();
+  closeModal('dayModal');
+  toast('האירוע נמחק');
+}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderEventList(){
+  const list=document.getElementById('eventList');
+  if(!events.length){list.innerHTML='<p style="color:#888">אין עדיין אירועים בלוח. הוסיפו את הראשון!</p>';return}
+  const sorted=[...events].sort((a,b)=>a.date.localeCompare(b.date)||( (a.time||'').localeCompare(b.time||'') ));
+  list.innerHTML=sorted.map(ev=>{
+    const [y,m,d]=ev.date.split('-');
+    return '<div class="event-row"><div class="meta"><b>'+esc(ev.title)+'</b> · '+d+'.'+m+'.'+y+
+      (ev.time?' · '+ev.time:'')+
+      (ev.desc?'<br><span style="color:#666;font-size:.85rem">'+esc(ev.desc)+'</span>':'')+
+      '</div><button class="btn danger" onclick="deleteEvent(\''+ev.id+'\')">מחיקה</button></div>';
+  }).join('');
+}
+
+/* ================= CHATBOT ================= */
+const BOOKLET_CONTEXT=`אתה "בוט סאלד" – עוזר ידידותי של בית הספר הממלכתי ע"ש הנרייטה סאלד בירושלים, לשנת הלימודים התשפ"ז. ענה בעברית, בקצרה, בחום ובנימה צעירה. ענה רק על סמך המידע הבא מחוברת פתיחת השנה. אם שואלים משהו שלא מופיע – אמור שהמידע לא נמצא בחוברת והפנה לפנות למזכירות בית הספר או למחנכת.
+
+מידע מהחוברת:
+חזון: בית הספר הוא מקום שחיים בו, לא רק לומדים בו. בשנת תשפ"ז מחזקים תחושת שייכות. מטרות: הילד במרכז (זיהוי חוזקות, בחירה, אחריות, סקרנות, ביטחון עצמי, קול אישי); שייכות בחירה ואחריות; למידה משמעותית (ידע, מיומנויות, משמעות, חיבור לעולם האמיתי, חקר ויצירה); קהילה ואמון.
+דבר המנהל תומר אושרי: שיפוצי קיץ – מגרש ספורט עליון, הנגשת החצר העליונה לתחתונה, משחק חוץ-כיתתי אלקטרוני. שיפוץ מרחב כיתות שכבת א'. מתוכננים: חממה למדעים ובוטניקה ומטבח ללמידה בבישול ואפייה. סגנית המנהל: יפה אמסלם. יו"ר הנהגת ההורים: בת-חן נבו, יערה נסטר-איל, אורית תור.
+פדגוגיה: למידה רב-גילאית, קבוצות משימה, בחירה אמיתית, פרויקטים אישיים, למידה מבוססת מקום/קהילה/מתוך החיים, תערוכות ותוצרי למידה, אינטליגנציות מגוונות, מיפוי אישי, שילוב ידע-מיומנויות-משמעות. לומדים בכל מקום: כיתה, חצר, טבע, סדנאות, קהילה.
+חברת הילדים: שיטת לת"ת – לכל תלמיד תפקיד. תלמידי ג'-ו' פעילים בוועדות עם ליווי מורים בשעות קבועות. תלמידי א'-ב' – הובלה וניהול עצמי כיתתי וחונכויות. הוועדות: ספריה, הפסקה פעילה, עיתון, רדיו, סביבה וקיימות, גישור, שגריר חוץ, חממה, מטבח, עיצוב מרחבים, חדר משחקים, מעורבות חברתית, חגים ומועדים, בוקר טוב.
+חונכות: ו' חונכים את ד', ה' את ג', ד' את ילדי הגנים, ב' את א'.
+גוונים: מתרחב לכיתות א' ו-ו'. כיתות א'-ג' – ימי שני שעות 6-7. כיתות ד'-ו' – ימי שלישי שעות 6-7. חוגים לדוגמה: רדיו, מוזיקה, רובוטיקה, מחול, שח-מט.
+תוכניות העשרה: אמירים, כיתת אמן בשיתוף מוזיאון ישראל, מתמטיקו, ליגת השכונות (ספורט ומנהיגות). חדר מל"א – מענה מותאם לקשיים רגשיים/חברתיים/לימודיים/התנהגותיים בשיתוף המחנכת ורכזת החדר. יש גם מענים רגשיים וטיפוליים.
+צוות: מנהל תומר אושרי, סגנית יפה אמסלם, יועץ יובל צור. מזכירות: ברכה לניאדו ויערית טל. אב בית: מתניה אברהם. רכזות: שכבות א+ב הדס אליהו, תקשוב ואנגלית צפנת גליס, מדעים עינת פלד, משאבי אנוש (HR, תפקיד חדש) מאיה הורוביץ, מתמטיקה ענת צפניה, פרט מירה בן עזרא, גוונים בעז פיינגולד, טיולים יעל וינקלר, רכז חברתי אסף אגיוף.
+מחנכים: א'1 מאיה הורוביץ, א'2 עינת אלון וסיוון בן הרוש, ב'1 תמר שייביץ בן אבי, ב'2 הדס אליהו, ג'1 אלינור לוי, ג'2 מירה בן עזרא וקרן שטרית, ג'3 ענת צפניה, ד'1 נס רחילוביץ, ד'2 עינת פלד, ה'1 יואב פז, ה'2 עדי בן דוד ומירית סיידוף, ה'3 יפית זאדה, ו'1 בעז פיינגולד, ו'2 אסף אגיוף. מקצועיים: מדעים וזה"ב לי אוחנה, מוסיקה יוחאי ורד גוברמן, אומנות סתיו סקמסקי.
+נהלים: יום הלימודים נפתח ב-8:05. איחור – נכנסים בשקט. ריבוי איחורים – שיחה עם ההורים; מקרים חריגים – פנייה לקב"ס המחוז. תלבושת אחידה והופעה מכבדת; בחינוך גופני לבוש ונעליים מתאימים; אי-עמידה – החלפה ממאגר החולצות, מקרים חוזרים – פנייה להורים. עקרונות: חופש מחייב אחריות, כבוד, אחריות, מוגנות, הקשבה, תיקון, שייכות.
+אלימות: אפס סובלנות לפגיעה פיזית/מילולית/השפלה/איומים/בריונות/פגיעה מקוונת. הצוות עוצר אירוע, מבטיח מוגנות, מברר, מתעד ומשתף הורים; מענה חינוכי ומשמעתי לפי חומרה; במקרים חמורים – לפי הנחיות משרד החינוך והתקנון. דיווח אינו הלשנה. סביבה: שמירה על ניקיון וציוד; מי שפוגע בציוד ישלם או יתקן.
+הורים: צוותי פעילות – נעים להכיר, שישי משפחתי, קיימות, תקשורת, בינוי ופיתוח, מטבח חינוכי, טיולים, מהפיכת הקשב, בוקר קהילה, חגים וטקסים. ועד הורים מרכזי מתכנס מדי חודש.
+סיסמה מרכזית: "זה המקום שלנו – נבנה אותו יחד".`;
+
+let chatHistory=[];
+function toggleChat(){
+  const box=document.getElementById('chatBox');
+  const fab=document.getElementById('chatFab');
+  box.classList.toggle('open');
+  fab.style.display=box.classList.contains('open')?'none':'block';
+  if(box.classList.contains('open'))document.getElementById('chatInput').focus();
+}
+function addMsg(text,cls){
+  const m=document.createElement('div');
+  m.className='msg '+cls;
+  m.textContent=text;
+  const box=document.getElementById('chatMsgs');
+  box.appendChild(m);
+  box.scrollTop=box.scrollHeight;
+  return m;
+}
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const q=input.value.trim();
+  if(!q)return;
+  input.value='';
+  addMsg(q,'user');
+  chatHistory.push({role:'user',content:q});
+  const typing=addMsg('הבוט חושב...','bot typing');
+  try{
+    const history=chatHistory.slice(-10);
+    const messages=[
+      {role:'user',content:BOOKLET_CONTEXT+'\n\nענה מעתה על שאלות לפי ההנחיות והמידע שלמעלה בלבד.'},
+      {role:'assistant',content:'הבנתי! אני בוט סאלד ואענה בעברית, בקצרה ובחום, רק על סמך המידע מהחוברת.'},
+      ...history
+    ];
+    const response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        messages:messages
+      })
+    });
+    const data=await response.json();
+    if(data.error)throw new Error(data.error.message||'API error');
+    const answer=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
+    if(!answer)throw new Error('empty');
+    typing.remove();
+    addMsg(answer,'bot');
+    chatHistory.push({role:'assistant',content:answer});
+  }catch(err){
+    typing.remove();
+    addMsg('אופס, לא הצלחתי להתחבר לבוט 🙏\nשימו לב: הבוט פועל רק כשהאתר מוצג בתוך Claude (בתצוגת האתר בצ׳אט), ולא כשפותחים את הקובץ ישירות בדפדפן.','bot');
+    chatHistory.pop();
+  }
+}
+
+/* ================= INIT ================= */
+renderCalendar();
+loadEvents();
+</script>
+</body>
+</html>
