@@ -534,18 +534,33 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
 <section class="part" id="calendar">
   <span class="part-tag">לוח שנה</span>
   <h2>לוח אירועים של בית הספר</h2>
-  <p>השנה נעדכן את אירועי בית הספר וקהילת סאלד ביומן, לטובת שקיפות והזדמנות להיערך מראש. מוזמנים לעקוב, להתעדכן וכמובן – לקחת חלק. לחצו על יום כדי לראות את האירועים בו; הוספת אירועים מתבצעת דרך מערכת הניהול (או בלחיצה על יום לאחר התחברות).</p>
-  <div class="cal-wrap">
-    <div class="cal-head">
-      <h3 id="calTitle"></h3>
-      <div class="cal-nav">
-        <button onclick="changeMonth(1)" title="חודש הבא">‹</button>
-        <button onclick="goToday()" title="היום" style="width:auto;padding:0 .8rem;font-size:.85rem">היום</button>
-        <button onclick="changeMonth(-1)" title="חודש קודם">›</button>
-      </div>
+  <p>השנה נעדכן את אירועי בית הספר וקהילת סאלד ביומן, לטובת שקיפות והזדמנות להיערך מראש. מוזמנים לעקוב, להתעדכן וכמובן – לקחת חלק.</p>
+
+  <!-- לוח Google Calendar משותף -->
+  <div id="gcalWrap" style="display:none">
+    <div class="cal-wrap" style="padding:.6rem">
+      <iframe id="gcalFrame" style="border:0;width:100%;height:560px;border-radius:12px" frameborder="0" scrolling="no" title="לוח אירועים בית ספר סאלד"></iframe>
     </div>
-    <div class="cal-grid" id="calGrid"></div>
-    <p class="cal-legend">💡 האירועים בלוח משותפים לכל קהילת בית הספר.</p>
+    <p class="cal-legend">💡 הלוח משותף ומתעדכן לכל קהילת בית הספר. ניהול האירועים מתבצע ביומן Google של בית הספר.</p>
+  </div>
+
+  <!-- הודעת הגדרה + לוח מקומי כגיבוי -->
+  <div id="gcalSetup" style="display:none">
+    <div style="background:#fff;border-radius:16px;border-right:6px solid var(--orange);padding:1rem 1.2rem;margin:1rem 0;font-size:.92rem">
+      <b>⚙️ למנהל האתר:</b> כדי להפעיל לוח משותף לכל הקהילה, צרו יומן Google ציבורי של בית הספר והדביקו את מזהה היומן (Calendar ID) במשתנה <code dir="ltr">GCAL_ID</code> שבראש קוד האתר. עד אז מוצג לוח מקומי (נשמר בדפדפן של כל גולש בלבד).
+    </div>
+    <div class="cal-wrap">
+      <div class="cal-head">
+        <h3 id="calTitle"></h3>
+        <div class="cal-nav">
+          <button onclick="changeMonth(1)" title="חודש הבא">‹</button>
+          <button onclick="goToday()" title="היום" style="width:auto;padding:0 .8rem;font-size:.85rem">היום</button>
+          <button onclick="changeMonth(-1)" title="חודש קודם">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <p class="cal-legend">💡 לחצו על יום כדי לראות את האירועים בו; הוספת אירועים דרך מערכת הניהול.</p>
+    </div>
   </div>
 </section>
 
@@ -684,6 +699,26 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ================= הגדרת לוח Google (למנהל האתר) =================
+   1. היכנסו ל-calendar.google.com עם חשבון בית הספר
+   2. צרו יומן חדש (למשל "אירועי סאלד") והפכו אותו לציבורי:
+      הגדרות היומן ← הרשאות גישה ← סמנו "הפוך לזמין באופן ציבורי"
+   3. באותו עמוד הגדרות, תחת "שילוב יומן", העתיקו את "מזהה היומן"
+      (Calendar ID – נראה כמו כתובת מייל)
+   4. הדביקו אותו כאן בין הגרשיים: */
+const GCAL_ID='6de6946f0809e96c9828e810f6f6e99ccfd940a3696ec9e5a3262a72e16970ef@group.calendar.google.com';
+/* ================================================================= */
+function initCalendarMode(){
+  if(GCAL_ID){
+    document.getElementById('gcalWrap').style.display='block';
+    document.getElementById('gcalFrame').src=
+      'https://calendar.google.com/calendar/embed?src='+encodeURIComponent(GCAL_ID)+
+      '&ctz=Asia%2FJerusalem&hl=iw&mode=MONTH&showTitle=0&showPrint=0&showTz=0&bgcolor=%23ffffff';
+  }else{
+    document.getElementById('gcalSetup').style.display='block';
+  }
+}
+
 /* ================= NAV ================= */
 function closeNav(){document.getElementById('navLinks').classList.remove('open')}
 
@@ -734,17 +769,27 @@ function logoutAdmin(){
 /* ================= EVENTS STORAGE ================= */
 const STORE_KEY='szold-calendar-events';
 let events=[];
+const hasClaudeStorage=()=>typeof window.storage!=='undefined'&&window.storage&&typeof window.storage.get==='function';
 async function loadEvents(){
   try{
-    const res=await window.storage.get(STORE_KEY,true);
-    if(res&&res.value)events=JSON.parse(res.value);
+    if(hasClaudeStorage()){
+      const res=await window.storage.get(STORE_KEY,true);
+      if(res&&res.value)events=JSON.parse(res.value);
+    }else{
+      const raw=localStorage.getItem(STORE_KEY);
+      if(raw)events=JSON.parse(raw);
+    }
   }catch(e){events=[]}
   renderCalendar();
   if(isAdmin)renderEventList();
 }
 async function persistEvents(){
   try{
-    await window.storage.set(STORE_KEY,JSON.stringify(events),true);
+    if(hasClaudeStorage()){
+      await window.storage.set(STORE_KEY,JSON.stringify(events),true);
+    }else{
+      localStorage.setItem(STORE_KEY,JSON.stringify(events));
+    }
   }catch(e){toast('שגיאה בשמירה – נסו שוב')}
 }
 
@@ -962,8 +1007,17 @@ function sendChat(){
 }
 
 /* ================= INIT ================= */
+initCalendarMode();
 renderCalendar();
 loadEvents();
+if(GCAL_ID){
+  const ap=document.getElementById('adminPanel');
+  ap.querySelector('h2').textContent='ניהול לוח האירועים – דרך Google Calendar';
+  ap.querySelectorAll('p, #eventList, button.btn:not(.ghost)').forEach(el=>{if(!el.closest('.admin-bar'))el.style.display='none'});
+  const note=document.createElement('div');
+  note.innerHTML='<p>הלוח באתר מוצג מיומן Google המשותף של בית הספר. כדי להוסיף, לערוך או למחוק אירועים – פשוט עדכנו את היומן, והאתר יתעדכן אוטומטית לכל הגולשים.</p><a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/r?cid='+encodeURIComponent(GCAL_ID)+'">פתיחת היומן ב-Google Calendar ↗</a>';
+  ap.appendChild(note);
+}
 </script>
 </body>
 </html>
