@@ -918,6 +918,22 @@ const KB=[
   a:'אנחנו רוצים לתת מקום לחלומות של תלמידים, מורים והורים 💭 מה היית רוצה ללמוד? ליצור? להוביל? לשנות? מוזמנים להצטרף לתהליך הייחודיות ולהוביל בקהילה!'},
 ];
 function normalize(s){return s.replace(/["'״׳,.?!\-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
+function toggleChat(){
+  const box=document.getElementById('chatBox');
+  const fab=document.getElementById('chatFab');
+  box.classList.toggle('open');
+  fab.style.display=box.classList.contains('open')?'none':'block';
+  if(box.classList.contains('open'))document.getElementById('chatInput').focus();
+}
+function addMsg(text,cls){
+  const m=document.createElement('div');
+  m.className='msg '+cls;
+  m.textContent=text;
+  const box=document.getElementById('chatMsgs');
+  box.appendChild(m);
+  box.scrollTop=box.scrollHeight;
+  return m;
+}
 function botAnswer(q){
   const nq=normalize(q);
   let best=null,bestScore=0;
