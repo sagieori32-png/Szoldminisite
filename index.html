@@ -829,7 +829,7 @@ function initCalendarMode(){
 }
 
 /* ===== אירועים קרובים (שבועיים) מתוך יומן Google ===== */
-const GCAL_API_KEY=''; /* אופציונלי: מפתח Google Calendar API לשליפה יציבה יותר */
+const GCAL_API_KEY='AIzaSyAKEedq2V4lsq3TWxjOjyboXfK5MwgTGXI'; /* מפתח Google Calendar API */
 const HEB_DAYS=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 async function loadUpcoming(){
   const now=new Date();
@@ -842,6 +842,7 @@ async function loadUpcoming(){
         '&timeMin='+now.toISOString()+'&timeMax='+until.toISOString()+'&maxResults=20';
       const res=await fetch(url);
       const data=await res.json();
+      if(data.error){console.warn('שגיאת Google Calendar API:',data.error.code,data.error.message)}
       items=(data.items||[]).map(ev=>({
         title:ev.summary||'אירוע',
         start:new Date(ev.start.dateTime||ev.start.date+'T00:00:00'),
@@ -861,9 +862,12 @@ async function loadUpcoming(){
           const r=await fetch(u);
           if(r.ok){
             const t=await r.text();
-            if(t&&t.indexOf('BEGIN:VCALENDAR')!==-1){text=t;break}
+            if(t&&t.indexOf('BEGIN:VCALENDAR')!==-1){text=t;console.log('פיד היומן נשלף בהצלחה דרך:',u.split('/')[2]);break}
+            console.warn('מקור החזיר תוכן לא תקין:',u.split('/')[2]);
+          }else{
+            console.warn('מקור נכשל (סטטוס '+r.status+'):',u.split('/')[2]);
           }
-        }catch(e){}
+        }catch(e){console.warn('מקור נחסם (CORS/רשת):',u.split('/')[2])}
       }
       if(!text){console.warn('לא ניתן לשלוף את פיד היומן (ייתכן שהיומן אינו ציבורי)')}
       else
@@ -906,9 +910,37 @@ function parseICS(text){
       const h=+raw.slice(9,11),mi=+raw.slice(11,13);
       start=raw.endsWith('Z')?new Date(Date.UTC(y,mo,da,h,mi)):new Date(y,mo,da,h,mi);
     }
-    events.push({title:(sm?sm[1]:'אירוע').replace(/\\,/g,',').replace(/\\n/g,' ').trim(),start,allDay});
+    const title=(sm?sm[1]:'אירוע').replace(/\\,/g,',').replace(/\\n/g,' ').trim();
+    const rr=body.match(/RRULE:(.*)/);
+    if(rr){
+      /* הרחבה בסיסית של אירועים חוזרים לטווח of השבועיים הקרובים */
+      const rule={};rr[1].trim().split(';').forEach(p=>{const[k,v]=p.split('=');rule[k]=v});
+      const freq=rule.FREQ;
+      const untilRule=rule.UNTIL?parseIcsDate(rule.UNTIL):null;
+      const horizon=new Date(Date.now()+14*24*60*60*1000);
+      let cur=new Date(start);
+      let guard=0;
+      while(cur<=horizon&&guard<600){
+        guard++;
+        if(untilRule&&cur>untilRule)break;
+        if(cur>=startOfDay(new Date()))events.push({title,start:new Date(cur),allDay});
+        if(freq==='DAILY')cur.setDate(cur.getDate()+(+rule.INTERVAL||1));
+        else if(freq==='WEEKLY')cur.setDate(cur.getDate()+7*(+rule.INTERVAL||1));
+        else if(freq==='MONTHLY')cur.setMonth(cur.getMonth()+(+rule.INTERVAL||1));
+        else if(freq==='YEARLY')cur.setFullYear(cur.getFullYear()+(+rule.INTERVAL||1));
+        else break;
+      }
+    }else{
+      events.push({title,start,allDay});
+    }
   }
   return events;
+}
+function parseIcsDate(raw){
+  if(!raw)return null;
+  if(raw.length===8)return new Date(+raw.slice(0,4),+raw.slice(4,6)-1,+raw.slice(6,8));
+  const y=+raw.slice(0,4),mo=+raw.slice(4,6)-1,da=+raw.slice(6,8),h=+raw.slice(9,11)||0,mi=+raw.slice(11,13)||0;
+  return raw.endsWith('Z')?new Date(Date.UTC(y,mo,da,h,mi)):new Date(y,mo,da,h,mi);
 }
 
 /* ================= NAV ================= */
