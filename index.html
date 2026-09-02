@@ -1204,7 +1204,7 @@ const KB=[
  {k:['פסיכולוגית','כספי','מטפלת','שילוב','סייעת','מת\"י'],
   a:'מענים נוספים בצוות: עדי כספי – פסיכולוגית · מרים רוני בלוך – מטפלת באומנות · נועה הראש – מורת שילוב (מת\"י) · וסייעות אישיות וצמודות. הטלפונים ברשימת אנשי הקשר באתר, בחלק \"הצוות שלנו\" 💙'},
 ];
-function normalize(s){return s.replace(/["'״׳,.?!\-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
+function normalize(s){return s.replace(/["'״׳]/g,'').replace(/[,.?!\-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
 function toggleChat(){
   const box=document.getElementById('chatBox');
   const fab=document.getElementById('chatFab');
@@ -1221,7 +1221,48 @@ function addMsg(text,cls){
   box.scrollTop=box.scrollHeight;
   return m;
 }
+/* ===== מאגר אנשי קשר מובנה, לחיפוש טלפונים ותפקידים ===== */
+const CONTACTS=[{"name": "אושרי תומר", "role": "מנהל בית הספר", "phone": "050-7830326"}, {"name": "אמסלם יפה", "role": "סגנית מנהל, רכזת פדגוגית ומורה למתמטיקה", "phone": "050-3902317"}, {"name": "אסטריכר שולמית", "role": "סייעת אישית בכיתות ד׳–ה׳", "phone": "054-9094432"}, {"name": "אגיוף אסף", "role": "מחנך כיתה ו׳2", "phone": "050-8753445"}, {"name": "אלון עינת", "role": "מחנכת כיתה א׳2", "phone": "054-9739211"}, {"name": "אליהו הדס", "role": "מחנכת כיתה ב׳2 ורכזת שכבות א׳–ב׳", "phone": "050-3568680"}, {"name": "בן שטרית קרן", "role": "תומכת הוראה בכיתה ג׳2", "phone": "054-4920457"}, {"name": "בן עזרא מירה", "role": "מחנכת כיתה ג׳2", "phone": "050-8741109"}, {"name": "בן יאיר גלית", "role": "מורה לאנגלית", "phone": "054-7996986"}, {"name": "בבאזדה אוראל", "role": "מורה למוזיקה", "phone": "054-2255976"}, {"name": "בן דוד עדי", "role": "מחנכת כיתה ה׳2", "phone": "054-3269273"}, {"name": "כספי עדי", "role": "פסיכולוגית", "phone": "054-7216679"}, {"name": "בלוך מרים רוני", "role": "מטפלת באומנות", "phone": "050-9140855"}, {"name": "גליס צפנת", "role": "מורה לאנגלית", "phone": "054-4552079"}, {"name": "הורוביץ מאיה", "role": "מחנכת כיתה א׳1", "phone": "052-5617884"}, {"name": "הראש נועה", "role": "מורת שילוב, מת״י", "phone": "054-5668765"}, {"name": "בן הראש סיון", "role": "סייעת צמודה בכיתה א׳2", "phone": "052-7043443"}, {"name": "אלקיים מיכל", "role": "מורה עמיתה", "phone": "052-7331276"}, {"name": "זאדה יפית", "role": "מורה עמיתה בכיתה ה׳3", "phone": "052-6622788"}, {"name": "גוברמן יוחאי ורד", "role": "מורה למוזיקה", "phone": "052-8026033"}, {"name": "חטאב סמירה", "role": "מורה לערבית", "phone": "050-5909446"}, {"name": "חדד מעיין", "role": "מורה לחינוך גופני", "phone": "058-4212997"}, {"name": "כהן דור נורית", "role": "מורה לחינוך גופני", "phone": "050-6864120"}, {"name": "נעמה", "role": "מורה למחול", "phone": ""}, {"name": "כהן אושרית", "role": "סייעת אישית", "phone": "054-8581262"}, {"name": "לויתן חדוה", "role": "רכזת חדר מל״א", "phone": "054-9842135"}, {"name": "צור יובל", "role": "יועץ חינוכי", "phone": "050-4868951"}, {"name": "לוי אלינור", "role": "מחנכת כיתה ג׳1", "phone": "052-8496727"}, {"name": "פז יהודית", "role": "מורה לדוברי אנגלית", "phone": "054-5856760"}, {"name": "פז יואב", "role": "מחנך כיתה ה׳1", "phone": "050-8811346"}, {"name": "פלד עינת", "role": "מחנכת כיתה ד׳2", "phone": "054-8009825"}, {"name": "פיינגולד בועז", "role": "מחנך כיתה ו׳1", "phone": "052-5552010"}, {"name": "צפניה ענת", "role": "מחנכת כיתה ג׳3", "phone": "050-9163339"}, {"name": "קיופמן לירון", "role": "", "phone": "054-7862342"}, {"name": "רחילוביץ נס", "role": "מחנכת כיתה ד׳1", "phone": "054-7576425"}, {"name": "סקמסקי סתיו", "role": "מורה לאומנות", "phone": "053-4317518"}, {"name": "ספיר שפירא איילת", "role": "מורה לאומנות", "phone": "050-8822048"}, {"name": "שייביץ בן אבי תמר", "role": "מחנכת כיתה ב׳3", "phone": "054-6442661"}, {"name": "רבקה", "role": "בת שירות", "phone": ""}, {"name": "אלון ויואב", "role": "ש״ש השומר הצעיר", "phone": ""}];
+
+const STOPWORDS=new Set(['מה','מי','של','זה','זו','זאת','את','עם','גם','לא','כן','אני','אתה','שלה','שלו','שלי','ליצור','קשר','צור','מספר','טלפון','נייד','תפקיד','הטלפון','המספר','איך','מתקשרים','אפשר','בבקשה','תודה','מישהו','לכם','לו','לה','יש','אין','מתי','איפה','למה','כמה','איזה','האם','כדי','רוצה','אולי','בבקשה']);
+function findContacts(q){
+  const nq=normalize(q);
+  const qTokens=nq.split(' ').filter(t=>t.length>=2&&!STOPWORDS.has(t));
+  if(!qTokens.length)return [];
+  const scored=CONTACTS.map(c=>{
+    const nameTokens=normalize(c.name).split(' ').filter(Boolean);
+    const roleTokens=normalize(c.role||'').split(' ').filter(t=>!STOPWORDS.has(t));
+    let matched=0;
+    qTokens.forEach(qt=>{
+      const hitName=nameTokens.some(nt=>nt===qt||(qt.length>=3&&nt.length>=3&&(nt.includes(qt)||qt.includes(nt))));
+      const hitRole=roleTokens.some(rt=>rt===qt||(qt.length>=3&&rt.length>=3&&(rt.includes(qt)||qt.includes(rt))));
+      if(hitName)matched+=2; /* שם שווה יותר מתפקיד */
+      else if(hitRole)matched+=1;
+    });
+    return {c,matched};
+  }).filter(x=>x.matched>0)
+    .sort((a,b)=>b.matched-a.matched);
+  if(!scored.length)return [];
+  const top=scored[0].matched;
+  return scored.filter(x=>x.matched===top).map(x=>x.c);
+}
+const CONTACT_TRIGGER=/(טלפון|נייד|מספר|ליצור קשר|צור קשר|איך מתקשרים|תפקיד של|מי זה|מי זו|מי ה)/;
+function contactAnswer(q){
+  if(!CONTACT_TRIGGER.test(q)&&!/[א-ת]{2,}\s+[א-ת]{2,}/.test(q))return null;
+  const found=findContacts(q);
+  if(!found.length)return null;
+  if(found.length===1){
+    const c=found[0];
+    return `${c.name}${c.role?' – '+c.role:''}${c.phone?' 📞 '+c.phone:' (לא צוין מספר טלפון בחוברת)'}`;
+  }
+  return 'מצאתי כמה התאמות:\n'+found.slice(0,5).map(c=>
+    `• ${c.name}${c.role?' – '+c.role:''}${c.phone?' 📞 '+c.phone:''}`
+  ).join('\n');
+}
+
 function botAnswer(q){
+  const contactHit=contactAnswer(q);
+  if(contactHit)return contactHit;
   const nq=normalize(q);
   let best=null,bestScore=0;
   for(const item of KB){
