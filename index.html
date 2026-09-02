@@ -301,6 +301,7 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
       <a href="#principal" onclick="closeNav()">דבר המנהל</a>
       <a href="#part-b" onclick="closeNav()">סאלד בפעולה</a>
       <a href="#staff" onclick="closeNav()">הצוות שלנו</a>
+      <a href="#contacts" onclick="closeNav()">אנשי קשר</a>
       <a href="#part-c" onclick="closeNav()">עושים סדר</a>
       <a href="#calendar" onclick="closeNav()">לוח שנה</a>
       <a href="#parents" onclick="closeNav()">הורים</a>
@@ -509,10 +510,15 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
     </div>
   </div>
 
-  <h3 id="contacts">אנשי קשר, תפקידים וטלפונים 📒</h3>
+</section>
+
+<!-- ============ CONTACTS ============ -->
+<section class="part" id="contacts">
+  <span class="part-tag">אנשי קשר</span>
+  <h2>אנשי קשר, תפקידים וטלפונים 📒</h2>
   <p>יש ליצור קשר עם המורות והמורים לאחר שעות הלימודים, תוך התחשבות בשעות המקובלות והמתאימות לשיחה.</p>
-  <details style="background:#fff;border-radius:16px;padding:1rem 1.4rem;box-shadow:0 3px 12px rgba(0,0,0,.06)">
-    <summary style="cursor:pointer;font-weight:700;color:var(--green);font-family:'Rubik'">לחצו להצגת רשימת אנשי הקשר המלאה</summary>
+  <details open style="background:#fff;border-radius:16px;padding:1rem 1.4rem;box-shadow:0 3px 12px rgba(0,0,0,.06)">
+    <summary style="cursor:pointer;font-weight:700;color:var(--green);font-family:'Rubik'">רשימת אנשי הקשר המלאה (לחצו לכיווץ/הרחבה)</summary>
     <ul style="list-style:none;margin-top:.8rem;columns:2;column-gap:2rem" class="contact-list">
       <li><b>אושרי תומר</b> – מנהל בית הספר – <a href="tel:0507830326" dir="ltr">050-7830326</a></li>
       <li><b>אמסלם יפה</b> – סגנית מנהל, רכזת פדגוגית ומורה למתמטיקה – <a href="tel:0503902317" dir="ltr">050-3902317</a></li>
@@ -556,6 +562,7 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
     </ul>
   </details>
 </section>
+
 
 <!-- ============ PART C ============ -->
 <section class="part" id="part-c">
@@ -812,16 +819,23 @@ async function loadUpcoming(){
       }));
     }else{
       const ics='https://calendar.google.com/calendar/ical/'+encodeURIComponent(GCAL_ID)+'/public/basic.ics';
+      const sources=[
+        ics,
+        'https://corsproxy.io/?url='+encodeURIComponent(ics),
+        'https://api.allorigins.win/raw?url='+encodeURIComponent(ics),
+        'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(ics)
+      ];
       let text=null;
-      try{
-        const r=await fetch(ics);
-        if(r.ok)text=await r.text();
-      }catch(e){}
-      if(!text){
-        const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(ics));
-        if(r.ok)text=await r.text();
+      for(const u of sources){
+        try{
+          const r=await fetch(u);
+          if(r.ok){
+            const t=await r.text();
+            if(t&&t.indexOf('BEGIN:VCALENDAR')!==-1){text=t;break}
+          }
+        }catch(e){}
       }
-      if(!text)return;
+      if(!text){console.warn('לא ניתן לשלוף את פיד היומן (ייתכן שהיומן אינו ציבורי)');return}
       items=parseICS(text).filter(ev=>ev.start>=startOfDay(now)&&ev.start<=until);
     }
   }catch(e){return}
