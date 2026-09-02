@@ -201,6 +201,34 @@ section.part p{margin-bottom:.8rem;max-width:70ch}
 }
 .cal-event.g{background:var(--green)}
 .cal-legend{font-size:.82rem;color:#777;margin-top:.7rem}
+/* ---- upcoming events banner ---- */
+.upcoming-banner{
+  background:linear-gradient(120deg,var(--green),var(--green-dark));
+  border-radius:20px;padding:1.1rem 1.3rem;margin:1.2rem 0;
+  box-shadow:0 8px 24px rgba(15,144,119,.28);
+}
+.upcoming-head{
+  font-family:'Rubik';font-weight:900;color:#fff;font-size:1.15rem;margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.4rem;
+}
+.upcoming-list{display:flex;flex-wrap:wrap;gap:.6rem}
+.upcoming-item{
+  background:#fff;border-radius:14px;padding:.55rem .95rem;
+  display:flex;align-items:center;gap:.7rem;box-shadow:0 3px 10px rgba(0,0,0,.12);
+  font-size:.92rem;
+}
+.upcoming-item .date-badge{
+  background:var(--magenta);color:#fff;border-radius:10px;padding:.25rem .6rem;
+  font-family:'Rubik';font-weight:700;font-size:.8rem;text-align:center;line-height:1.25;white-space:nowrap;
+}
+.upcoming-item .date-badge small{display:block;font-weight:500;font-size:.68rem;opacity:.9}
+.upcoming-item .ev-title{font-weight:700;color:var(--ink)}
+.upcoming-item .ev-time{color:#777;font-size:.8rem}
+.upcoming-empty{
+  background:rgba(255,255,255,.18);border:1.5px dashed rgba(255,255,255,.6);
+  color:#fff;border-radius:14px;padding:.55rem 1.1rem;font-weight:500;font-size:.95rem;
+}
+@media(max-width:640px){.upcoming-item{width:100%}}
 @media(max-width:640px){.cal-cell{min-height:58px}.cal-event{font-size:.6rem}}
 
 /* ---------- MODALS ---------- */
@@ -607,9 +635,11 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
 
   <!-- לוח Google Calendar משותף -->
   <div id="gcalWrap" style="display:none">
-    <div id="upcomingWrap" style="display:none;margin:1rem 0">
-      <h3 style="margin-top:0">🔔 אירועים קרובים (בשבועיים הקרובים)</h3>
-      <div id="upcomingList" class="chip-grid"></div>
+    <div id="upcomingWrap" class="upcoming-banner">
+      <div class="upcoming-head">🔔 אירועים קרובים</div>
+      <div id="upcomingList" class="upcoming-list">
+        <span class="upcoming-empty">טוען אירועים...</span>
+      </div>
     </div>
     <div class="cal-wrap" style="padding:.6rem">
       <iframe id="gcalFrame" style="border:0;width:100%;height:560px;border-radius:12px" frameborder="0" scrolling="no" title="לוח אירועים בית ספר סאלד"></iframe>
@@ -835,21 +865,27 @@ async function loadUpcoming(){
           }
         }catch(e){}
       }
-      if(!text){console.warn('לא ניתן לשלוף את פיד היומן (ייתכן שהיומן אינו ציבורי)');return}
+      if(!text){console.warn('לא ניתן לשלוף את פיד היומן (ייתכן שהיומן אינו ציבורי)')}
+      else
       items=parseICS(text).filter(ev=>ev.start>=startOfDay(now)&&ev.start<=until);
     }
-  }catch(e){return}
+  }catch(e){}
   items=items.filter(ev=>ev.start<=until&&ev.start>=startOfDay(now))
              .sort((a,b)=>a.start-b.start).slice(0,8);
-  if(!items.length)return;
   const list=document.getElementById('upcomingList');
+  if(!items.length){
+    list.innerHTML='<span class="upcoming-empty">אין אירועים קרובים בשבועיים הקרובים 🌿</span>';
+    return;
+  }
   list.innerHTML=items.map(ev=>{
     const d=ev.start;
-    const dateStr='יום '+HEB_DAYS[d.getDay()]+' '+d.getDate()+'.'+(d.getMonth()+1);
-    const timeStr=ev.allDay?'':' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-    return '<span class="chip" style="background:#fff"><b style="color:var(--magenta)">'+dateStr+timeStr+'</b> – '+esc(ev.title)+'</span>';
+    const timeStr=ev.allDay?'':String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    return '<div class="upcoming-item">'+
+      '<span class="date-badge">'+d.getDate()+'.'+(d.getMonth()+1)+'<small>יום '+HEB_DAYS[d.getDay()]+'</small></span>'+
+      '<span><span class="ev-title">'+esc(ev.title)+'</span>'+
+      (timeStr?'<br><span class="ev-time">🕐 '+timeStr+'</span>':'')+
+      '</span></div>';
   }).join('');
-  document.getElementById('upcomingWrap').style.display='block';
 }
 function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
 function parseICS(text){
