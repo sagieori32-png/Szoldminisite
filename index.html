@@ -598,28 +598,12 @@ footer .stars{font-size:1.4rem;letter-spacing:.5rem;margin-bottom:.6rem}
   <h2>לוח אירועים של בית הספר</h2>
   <p>השנה נעדכן את אירועי בית הספר וקהילת סאלד ביומן, לטובת שקיפות והזדמנות להיערך מראש. מוזמנים לעקוב, להתעדכן וכמובן – לקחת חלק.</p>
 
-  <h3>לוח שנה שנתי – אירועים מרכזיים</h3>
-  <ul class="rules-list">
-    <li><b>15.9</b> – אסיפות הורים כלליות שכבות ב׳–ו׳</li>
-    <li><b>22.10</b> – טקס יום הזיכרון ליצחק רבין, בהובלת ה׳3</li>
-    <li><b>27.10</b> – בחירות לכנסת</li>
-    <li><b>1.12, 2.12</b> – אסיפות הורים כיתתיות</li>
-    <li><b>22.1</b> – טקס ט״ו בשבט, בהובלת שכבת ג׳</li>
-    <li><b>29.1</b> – סיום מחצית א׳; חלוקת תעודות תוקדם ל-28.1</li>
-    <li><b>26.2</b> – בוקר קהילה</li>
-    <li><b>6.4, 7.4</b> – אסיפות הורים כיתתיות</li>
-    <li><b>9.4</b> – יריד אביב</li>
-    <li><b>4.5</b> – טקס יום הזיכרון לשואה ולגבורה, בהובלת ה׳1</li>
-    <li><b>11.5</b> – טקס יום הזיכרון לחללי מערכות ישראל, בהובלת שכבת ו׳</li>
-    <li><b>4.6</b> – טקס יום ירושלים, בהובלת שכבת ד׳</li>
-    <li><b>8.6</b> – טקס שבועות בית־ספרי</li>
-    <li><b>30.6</b> – סיום מחצית שנייה, חלוקת תעודות סוף שנה</li>
-  </ul>
-
-  <h3>היומן המתעדכן</h3>
-
   <!-- לוח Google Calendar משותף -->
   <div id="gcalWrap" style="display:none">
+    <div id="upcomingWrap" style="display:none;margin:1rem 0">
+      <h3 style="margin-top:0">🔔 אירועים קרובים (בשבועיים הקרובים)</h3>
+      <div id="upcomingList" class="chip-grid"></div>
+    </div>
     <div class="cal-wrap" style="padding:.6rem">
       <iframe id="gcalFrame" style="border:0;width:100%;height:560px;border-radius:12px" frameborder="0" scrolling="no" title="לוח אירועים בית ספר סאלד"></iframe>
     </div>
@@ -801,9 +785,80 @@ function initCalendarMode(){
     document.getElementById('gcalFrame').src=
       'https://calendar.google.com/calendar/embed?src='+encodeURIComponent(GCAL_ID)+
       '&ctz=Asia%2FJerusalem&hl=iw&mode=MONTH&showTitle=0&showPrint=0&showTz=0&bgcolor=%23ffffff';
+    loadUpcoming();
   }else{
     document.getElementById('gcalSetup').style.display='block';
   }
+}
+
+/* ===== אירועים קרובים (שבועיים) מתוך יומן Google ===== */
+const GCAL_API_KEY=''; /* אופציונלי: מפתח Google Calendar API לשליפה יציבה יותר */
+const HEB_DAYS=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+async function loadUpcoming(){
+  const now=new Date();
+  const until=new Date(now.getTime()+14*24*60*60*1000);
+  let items=[];
+  try{
+    if(GCAL_API_KEY){
+      const url='https://www.googleapis.com/calendar/v3/calendars/'+encodeURIComponent(GCAL_ID)+
+        '/events?key='+GCAL_API_KEY+'&singleEvents=true&orderBy=startTime'+
+        '&timeMin='+now.toISOString()+'&timeMax='+until.toISOString()+'&maxResults=20';
+      const res=await fetch(url);
+      const data=await res.json();
+      items=(data.items||[]).map(ev=>({
+        title:ev.summary||'אירוע',
+        start:new Date(ev.start.dateTime||ev.start.date+'T00:00:00'),
+        allDay:!ev.start.dateTime
+      }));
+    }else{
+      const ics='https://calendar.google.com/calendar/ical/'+encodeURIComponent(GCAL_ID)+'/public/basic.ics';
+      let text=null;
+      try{
+        const r=await fetch(ics);
+        if(r.ok)text=await r.text();
+      }catch(e){}
+      if(!text){
+        const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(ics));
+        if(r.ok)text=await r.text();
+      }
+      if(!text)return;
+      items=parseICS(text).filter(ev=>ev.start>=startOfDay(now)&&ev.start<=until);
+    }
+  }catch(e){return}
+  items=items.filter(ev=>ev.start<=until&&ev.start>=startOfDay(now))
+             .sort((a,b)=>a.start-b.start).slice(0,8);
+  if(!items.length)return;
+  const list=document.getElementById('upcomingList');
+  list.innerHTML=items.map(ev=>{
+    const d=ev.start;
+    const dateStr='יום '+HEB_DAYS[d.getDay()]+' '+d.getDate()+'.'+(d.getMonth()+1);
+    const timeStr=ev.allDay?'':' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    return '<span class="chip" style="background:#fff"><b style="color:var(--magenta)">'+dateStr+timeStr+'</b> – '+esc(ev.title)+'</span>';
+  }).join('');
+  document.getElementById('upcomingWrap').style.display='block';
+}
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
+function parseICS(text){
+  const events=[];
+  const blocks=text.split('BEGIN:VEVENT').slice(1);
+  for(const b of blocks){
+    const body=b.split('END:VEVENT')[0].replace(/\r?\n[ \t]/g,'');
+    const sm=body.match(/SUMMARY(?:;[^:]*)?:(.*)/);
+    const dm=body.match(/DTSTART(;[^:]*)?:([0-9TZ]+)/);
+    if(!dm)continue;
+    const raw=dm[2];
+    let start,allDay=false;
+    if(raw.length===8){ /* תאריך בלבד */
+      allDay=true;
+      start=new Date(+raw.slice(0,4),+raw.slice(4,6)-1,+raw.slice(6,8));
+    }else{
+      const y=+raw.slice(0,4),mo=+raw.slice(4,6)-1,da=+raw.slice(6,8);
+      const h=+raw.slice(9,11),mi=+raw.slice(11,13);
+      start=raw.endsWith('Z')?new Date(Date.UTC(y,mo,da,h,mi)):new Date(y,mo,da,h,mi);
+    }
+    events.push({title:(sm?sm[1]:'אירוע').replace(/\\,/g,',').replace(/\\n/g,' ').trim(),start,allDay});
+  }
+  return events;
 }
 
 /* ================= NAV ================= */
